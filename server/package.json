@@ -1,0 +1,22 @@
+{
+  "name": "@arifaidev/vehiclefeecalc-mcp",
+  "version": "1.0.0",
+  "private": true,
+  "description": "VehicleFeeCalc MCP server for Cursor and other MCP clients.",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "start": "tsx src/index.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "^2.0.0",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0"
+  }
+}
