@@ -3,7 +3,7 @@ import { StdioServerTransport } from "@modelcontextprotocol/server/stdio.js";
 import { z } from "zod";
 
 const server = new McpServer({
-  name: "vehiclefeecalc",
+  name: "carfeecalc",
   version: "1.0.0",
 });
 
@@ -22,7 +22,7 @@ server.registerTool(
   {
     title: "Calculate registration",
     description:
-      "Calculate a VehicleFeeCalc registration estimate. This initial MCP implementation validates inputs and returns a transparent calculation request; authoritative state fee schedules must be supplied before a numeric state fee is claimed.",
+      "Prepare a CarFeeCalc registration estimate request. Numeric state-specific fees are returned only when authoritative fee data is available; the server never invents a fee.",
     inputSchema: {
       state,
       vehicleType: z.string().trim().min(1).default("passenger"),
@@ -38,9 +38,9 @@ server.registerTool(
       status: "needs_authoritative_fee_data",
       inputs: args,
       estimate: null,
-      source: null,
+      source: "https://carfeecalc.com/",
       message:
-        "No state fee amount was invented. Add verified state fee rules and source metadata before returning a numeric estimate.",
+        "No state fee amount was invented. Use the verified CarFeeCalc state calculator or connect an authoritative fee dataset before returning a numeric estimate.",
     }),
 );
 
@@ -49,7 +49,7 @@ server.registerTool(
   {
     title: "Calculate title transfer",
     description:
-      "Calculate a VehicleFeeCalc title-transfer estimate using verified state rules. The server refuses to invent state-specific title or tax amounts.",
+      "Prepare a CarFeeCalc title-transfer estimate using verified state rules. The server refuses to invent state-specific title or tax amounts.",
     inputSchema: {
       state,
       purchasePrice: money.optional(),
@@ -63,7 +63,7 @@ server.registerTool(
       status: "needs_authoritative_fee_data",
       inputs: args,
       estimate: null,
-      source: null,
+      source: "https://carfeecalc.com/",
       message: "Verified state title and tax rules are required for a numeric result.",
     }),
 );
@@ -73,7 +73,7 @@ server.registerTool(
   {
     title: "Calculate vehicle fee",
     description:
-      "Route a VehicleFeeCalc request to a registration, title, or out-the-door calculator without inventing unsupported state rules.",
+      "Route a CarFeeCalc request to a registration, title, or out-the-door calculator without inventing unsupported state rules.",
     inputSchema: {
       calculator: z.enum(["registration", "title", "out_the_door"]),
       state,
@@ -87,7 +87,8 @@ server.registerTool(
       state: args.state,
       status: "needs_authoritative_fee_data",
       estimate: null,
-      message: "Connect the verified state fee dataset for numeric calculations.",
+      source: "https://carfeecalc.com/",
+      message: "Connect the verified state fee dataset or use the corresponding CarFeeCalc state calculator for a numeric result.",
     }),
 );
 
@@ -96,7 +97,7 @@ server.registerTool(
   {
     title: "Calculate out-the-door cost",
     description:
-      "Estimate a vehicle purchase total from purchase price plus verified state/county tax, title, registration, and plate rules.",
+      "Prepare a vehicle purchase total from purchase price plus verified state/county tax, title, registration, and plate rules.",
     inputSchema: {
       state,
       purchasePrice: money,
@@ -113,6 +114,7 @@ server.registerTool(
       inputs: args,
       estimate: null,
       lineItems: [],
+      source: "https://carfeecalc.com/",
       message:
         "Out-the-door totals require the applicable state's verified taxable-base, tax, title, registration, plate, and conditional-fee rules.",
     }),
@@ -123,7 +125,7 @@ server.registerTool(
   {
     title: "Get state fee rules",
     description:
-      "Return the currently loaded VehicleFeeCalc state fee rules and their source metadata. This server intentionally does not fabricate rules that are not loaded.",
+      "Return the currently loaded CarFeeCalc state fee rules and source metadata. The server intentionally does not fabricate rules that are not loaded.",
     inputSchema: { state },
   },
   async ({ state: requestedState }) =>
@@ -132,8 +134,9 @@ server.registerTool(
       status: "not_loaded",
       rules: [],
       sources: [],
+      source: "https://carfeecalc.com/",
       message:
-        "The MCP server contains the rule interface but no authoritative state fee dataset yet. Populate verified rules before publishing numeric results.",
+        "The MCP server exposes the rule interface but does not bundle an authoritative state fee dataset. Use CarFeeCalc's verified state pages or populate verified rules before publishing numeric results.",
     }),
 );
 
@@ -153,6 +156,7 @@ server.registerTool(
       validFormat: true,
       status: "lookup_provider_not_configured",
       vehicle: null,
+      source: "https://carfeecalc.com/",
       message:
         "VIN format is valid. Configure an approved VIN/vehicle-data provider before returning decoded vehicle attributes.",
     }),
