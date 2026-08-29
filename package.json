@@ -1,0 +1,23 @@
+{
+  "name": "carfeecalc-mcp",
+  "version": "1.0.0",
+  "description": "CarFeeCalc MCP server and Cursor plugin for vehicle registration, tax, title, plate and out-the-door fee research.",
+  "type": "module",
+  "license": "MIT",
+  "homepage": "https://carfeecalc.com/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arifaidev/vehiclefeecalc-mcp.git"
+  },
+  "bin": {
+    "carfeecalc-mcp": "bin/carfeecalc-mcp.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "^2.0.0",
+    "tsx": "^4.20.0",
+    "zod": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
