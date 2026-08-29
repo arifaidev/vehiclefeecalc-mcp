@@ -1,8 +1,8 @@
 {
-  "name": "@arifaidev/vehiclefeecalc-mcp",
+  "name": "carfeecalc-mcp-server",
   "version": "1.0.0",
   "private": true,
-  "description": "VehicleFeeCalc MCP server for Cursor and other MCP clients.",
+  "description": "CarFeeCalc MCP server for Cursor and other MCP clients.",
   "type": "module",
   "engines": { "node": ">=20" },
   "scripts": {
