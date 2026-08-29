@@ -1,1 +1,13 @@
-{"name":"vehiclefeecalc-marketplace","owner":{"name":"VehicleFeeCalc"},"metadata":{"description":"VehicleFeeCalc Cursor plugins and agent skills"},"plugins":[{"name":"vehiclefeecalc","source":".","description":"Vehicle registration, title, tax, plate, penalty, EV-fee, and out-the-door calculator skills for VehicleFeeCalc.com.","version":"1.0.0"}]}
+{
+  "name": "carfeecalc-marketplace",
+  "owner": { "name": "CarFeeCalc" },
+  "metadata": { "description": "CarFeeCalc tools and skills for vehicle fee research and calculation" },
+  "plugins": [
+    {
+      "name": "carfeecalc",
+      "source": ".",
+      "description": "Vehicle registration, title, tax, plate, EV-fee, VIN, state-fee research, and out-the-door calculator skills for CarFeeCalc.com.",
+      "version": "1.0.0"
+    }
+  ]
+}
